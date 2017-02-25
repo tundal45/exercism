@@ -13,13 +13,16 @@ class Raindrops
 
   def self.convert(number)
     divisors = Prime.instance.prime_division(number)
-      .select { |tuple| [3, 5, 7].include?(tuple.first) }
-      .map { |tuple| tuple.first }
+    retval = ''
 
-    return number.to_s if divisors.empty?
+    divisors.each do |divisor|
+      next unless [3, 5, 7].include?(divisor.first)
 
-    divisors.inject("") do |retval, divisor|
-      retval += MAPPING[divisor.to_s]
+      retval += MAPPING.fetch(divisor.first.to_s)
     end
+
+    return number.to_s if retval.empty?
+
+    retval
   end
 end
