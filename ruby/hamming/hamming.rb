@@ -6,12 +6,10 @@ class Hamming
   def self.compute(strand_a, strand_b)
     raise ArgumentError if strand_a.length != strand_b.length
 
-    count = 0
+    sa = strand_a.each_char
 
-    strand_a.each_char.with_index(0) do |char, index|
-      count += 1 unless char == strand_b[index]
+    strand_b.each_char.count do |char|
+      char != sa.next
     end
-
-    count
   end
 end
