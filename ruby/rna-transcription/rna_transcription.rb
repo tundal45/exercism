@@ -3,20 +3,8 @@ module BookKeeping
 end
 
 class Complement
-  COMPLEMENT_NUCLEOTIDES = {
-    G: 'C',
-    C: 'G',
-    T: 'A',
-    A: 'U'
-  }
-
   def self.of_dna(dna)
-    dna.each_char.map do |nucleotide|
-      nc = nucleotide.to_sym
-
-      return ''  unless COMPLEMENT_NUCLEOTIDES.keys.include?(nc)
-
-      COMPLEMENT_NUCLEOTIDES[nc]
-    end.join
+    invalid_nucleotides = dna.match /[^CGTA]/
+    invalid_nucleotides.nil? ? dna.tr('GCTA', 'CGAU') : ''
   end
 end
